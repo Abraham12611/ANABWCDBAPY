@@ -2,52 +2,45 @@ from flask import Flask, jsonify, request, render_template
 import random
 
 app = Flask(__name__)
+app.config['STATIC_FOLDER'] = 'static'
 
 balance = 0
+symbol_value = {'A': 2, 'B': 3, 'C': 5, 'D': 10}
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+
 @app.route('/get_deposit', methods=['GET'])
 def get_deposit():
     return jsonify(balance)
 
+
 @app.route('/spin', methods=['POST'])
 def spin():
-    lines = int(request.json['lines'])
-    bet_amount = int(request.json['betAmount'])
+    # Get the total bet from the form data
+    total_bet = int(request.form['bet_amount'])
 
-    total_bet = lines * bet_amount
+    # Generate random numbers for the slots
+    slot1 = random.choice(symbols)
+    slot2 = random.choice(symbols)
+    slot3 = random.choice(symbols)
 
-    if total_bet > balance:
-        return jsonify('Insufficient balance to place the bet.')
-
-    symbols = ['A', 'B', 'C', 'D']
-    columns = []
-    for _ in range(3):
-        column = [random.choice(symbols) for _ in range(lines)]
-        columns.append(column)
-
-    winnings = 0
-    winning_lines = []
-    for line in range(lines):
-        symbol = columns[0][line]
-        if all(column[line] == symbol for column in columns):
-            winnings += symbol_value[symbol] * bet_amount
-            winning_lines.append(line + 1)
-
-    balance -= total_bet
-    balance += winnings
-
-    result = f'You won ${winnings}.\n'
-    if winning_lines:
-        result += f'You won on lines: {", ".join(str(line) for line in winning_lines)}'
+    # Determine the win or loss
+    if slot1 == slot2 == slot3:
+        result = 'win'
+        payout = total_bet * 2
+        balance += payout  # Update the balance
     else:
-        result += 'You did not win.'
+        result = 'loss'
+        payout = 0
 
-    return jsonify(result)
+    return render_template('index.html', slot1=slot1, slot2=slot2, slot3=slot3, result=result, payout=payout, balance=balance)
+
+
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
