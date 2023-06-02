@@ -1,0 +1,38 @@
+#balance-container {
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+#slot-machine {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#reels-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.reel {
+    width: 100px;
+    height: 100px;
+    background-color: #ccc;
+    margin: 0 10px;
+}
+
+#bet-form {
+    margin-bottom: 20px;
+}
+
+#spin-button {
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+#result {
+    font-size: 24px;
+    font-weight: bold;
+}
+
