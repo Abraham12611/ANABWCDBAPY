@@ -26,3 +26,19 @@ metadata:
   {{- with .Values.minReadySeconds }}
   minReadySeconds: {{ . }}
   {{- end }}
+    template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/luascripts: {{ include (print $.Template.BasePath "/configmap-luascripts.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "fluent-bit.selectorLabels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- include "fluent-bit.pod" . | nindent 6 }}
+{{- end }}
