@@ -12,3 +12,17 @@ metadata:
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  {{- with .Values.updateStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "fluent-bit.selectorLabels" . | nindent 6 }}
+  {{- with .Values.minReadySeconds }}
+  minReadySeconds: {{ . }}
+  {{- end }}
