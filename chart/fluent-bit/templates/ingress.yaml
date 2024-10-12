@@ -3,3 +3,15 @@
 {{- $ingressSupportsPathType := eq (include "fluent-bit.ingress.supportsPathType" .) "true" -}}
 {{- $fullName := include "fluent-bit.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
+
+{{- if and ( eq .Values.kind "Deployment" ) .Values.ingress.enabled }}
+apiVersion: {{ include "fluent-bit.ingress.apiVersion" . }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "fluent-bit.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
