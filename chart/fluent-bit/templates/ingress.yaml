@@ -30,3 +30,33 @@ metadata:
       secretName: {{ . }}
       {{- end }}
     {{- end }}
+      {{- end }}
+  rules:
+    {{- range concat .Values.ingress.hosts .Values.ingress.extraHosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          - path: /
+            {{- if $ingressSupportsPathType }}
+            pathType: Prefix
+            {{- end }}
+            backend:
+              {{- if $ingressApiIsStable }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  {{- if .port }}
+                  number: {{ .port }}
+                  {{- else }}
+                  number: {{ $svcPort }}
+                  {{- end }}
+              {{- else }}
+              serviceName: {{ $fullName }}
+              {{- if .port }}
+              servicePort: {{ .port }}
+              {{- else }}
+              servicePort: {{ $svcPort }}
+              {{- end }}
+              {{- end }}
+    {{- end }}
+{{- end }}
