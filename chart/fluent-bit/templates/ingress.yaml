@@ -1,0 +1,5 @@
+{{- $ingressApiIsStable := eq (include "fluent-bit.ingress.isStable" .) "true" -}}
+{{- $ingressSupportsIngressClassName := eq (include "fluent-bit.ingress.supportsIngressClassName" .) "true" -}}
+{{- $ingressSupportsPathType := eq (include "fluent-bit.ingress.supportsPathType" .) "true" -}}
+{{- $fullName := include "fluent-bit.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
