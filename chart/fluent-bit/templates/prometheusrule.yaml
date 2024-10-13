@@ -6,3 +6,8 @@ metadata:
   {{- with .Values.prometheusRule.namespace }}
   namespace: {{ . }}
   {{- end }}
+  labels:
+    {{- include "fluent-bit.labels" . | nindent 4 }}
+  {{- if .Values.prometheusRule.additionalLabels }}
+    {{- toYaml .Values.prometheusRule.additionalLabels | nindent 4 }}
+  {{- end }}
