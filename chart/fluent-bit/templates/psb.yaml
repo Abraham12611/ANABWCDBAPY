@@ -1,3 +1,9 @@
 {{- if and .Values.podSecurityPolicy.create (semverCompare "<=1.25-0" .Capabilities.KubeVersion.GitVersion) -}}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
+metadata:
+  name: {{ include "fluent-bit.fullname" . }}
+{{- if .Values.podSecurityPolicy.annotations }}
+  annotations:
+    {{- toYaml .Values.podSecurityPolicy.annotations | nindent 4 }}
+{{- end }}
