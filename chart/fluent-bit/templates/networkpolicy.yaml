@@ -5,3 +5,9 @@ metadata:
   name: {{ include "fluent-bit.fullname" . | quote }}
   labels:
     {{- include "fluent-bit.labels" . | nindent 4 }}
+    spec:
+  policyTypes:
+    - "Ingress"
+  podSelector:
+    matchLabels:
+      {{- include "fluent-bit.selectorLabels" . | nindent 6 }}
