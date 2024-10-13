@@ -11,3 +11,10 @@ metadata:
   {{- if .Values.prometheusRule.additionalLabels }}
     {{- toYaml .Values.prometheusRule.additionalLabels | nindent 4 }}
   {{- end }}
+  spec:
+{{- if .Values.prometheusRule.rules }}
+  groups:
+  - name: {{ template "fluent-bit.name" . }}
+    rules: {{- toYaml .Values.prometheusRule.rules | nindent 4 }}
+{{- end }}
+{{- end }}
