@@ -1,0 +1,3 @@
+{{- if and  ( eq  .Values.kind "Deployment" )  .Values.podDisruptionBudget.enabled  }}
+apiVersion: {{ include "fluent-bit.pdb.apiVersion" . }}
+kind: PodDisruptionBudget
