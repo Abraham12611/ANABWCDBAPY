@@ -3,3 +3,9 @@ apiVersion: {{ include "fluent-bit.pdb.apiVersion" . }}
 kind: PodDisruptionBudget
 metadata:
   name: {{ include "fluent-bit.fullname" . }}
+   labels:
+    {{- include "fluent-bit.labels" . | nindent 4 }}
+{{- with .Values.podDisruptionBudget.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+{{- end }}
