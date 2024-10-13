@@ -1,0 +1,3 @@
+{{- if and .Values.podSecurityPolicy.create (semverCompare "<=1.25-0" .Capabilities.KubeVersion.GitVersion) -}}
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
