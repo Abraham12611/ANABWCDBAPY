@@ -17,3 +17,21 @@ allowHostIPC: false
 allowHostPorts: false
 allowHostPID: false
 allowedCapabilities: []
+forbiddenSysctls:
+- "*"
+readOnlyRootFilesystem: false
+requiredDropCapabilities:
+- MKNOD
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: MustRunAs
+supplementalGroups:
+  type: RunAsAny
+volumes:
+  - configMap
+  - emptyDir
+  - hostPath
+  - persistentVolumeClaim
+  - secret
+{{- end }}
