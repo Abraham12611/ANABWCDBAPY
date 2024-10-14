@@ -11,3 +11,9 @@ allowPrivilegedContainer: true
 allowPrivilegeEscalation: true
 allowHostDirVolumePlugin: true
 defaultAllowPrivilegeEscalation: false
+# forbid host namespaces
+allowHostNetwork: false
+allowHostIPC: false
+allowHostPorts: false
+allowHostPID: false
+allowedCapabilities: []
