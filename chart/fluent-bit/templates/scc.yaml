@@ -1,0 +1,3 @@
+{{- if and .Values.openShift.enabled .Values.openShift.securityContextConstraints.create }}
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
