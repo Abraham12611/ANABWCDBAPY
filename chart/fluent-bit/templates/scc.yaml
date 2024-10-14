@@ -7,3 +7,7 @@ metadata:
   annotations:
     {{- toYaml .Values.openShift.securityContextConstraints.annotations | nindent 4 }}
 {{- end }}
+allowPrivilegedContainer: true
+allowPrivilegeEscalation: true
+allowHostDirVolumePlugin: true
+defaultAllowPrivilegeEscalation: false
