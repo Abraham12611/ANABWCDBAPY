@@ -15,3 +15,14 @@ data:
     appendonly yes
     # Disable RDB persistence, AOF persistence already enabled.
     save ""
+     # End of common configuration
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/instance: {{ .Values.envName }}-insights-api-redis
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: insights-api-redis
+    stage: {{ .Values.envName }}
+  name: {{ .Values.envName }}-insights-api-redis-configuration
+  namespace: {{ .Release.Namespace }}
+---
